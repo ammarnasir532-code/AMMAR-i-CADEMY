@@ -51,7 +51,13 @@
 
         header { text-align: center; flex-shrink: 0; margin-bottom: 0; }
 
-        .chat-container { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
 
         .chat-messages {
             flex: 1;
@@ -87,7 +93,6 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
             word-break: break-word;
         }
-
         .message.user .content { background: rgba(255, 255, 240, 0.7); }
         .message.assistant .content { background: rgba(255, 255, 240, 0.9); }
         .message.system .content { background: rgba(249, 226, 175, 0.9); }
@@ -165,7 +170,13 @@
         }
         .circle-send:hover { background: rgba(212, 175, 55, 0.1); transform: scale(1.05); }
 
-        .compact-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .compact-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
         .upload-icon-small {
             background: none;
@@ -267,7 +278,7 @@
                 </div>
 
                 <div class="compact-row">
-                    <button class="upload-icon-small" id="uploadBtn" title="Upload image">📎</button>
+                    <button class="upload-icon-small" id="uploadBtn" title="Upload file">📎</button>
                     <button class="small-btn" id="deepThinkBtn">DeepThink</button>
                     <button class="small-btn" id="searchBtn">Search</button>
                     <div class="model-selector">
@@ -290,6 +301,7 @@
     </div>
 
     <script>
+        // DOM elements
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -306,8 +318,10 @@
         let deepThinkActive = false;
         let searchActive = false;
 
+        // Cache for faster learning
         const responseCache = new Map();
 
+        // Copy function
         window.copyText = function(element, text) {
             navigator.clipboard.writeText(text).then(() => {
                 element.classList.add('copied');
@@ -373,7 +387,9 @@
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            if (role === 'assistant' && voiceOutput.checked) speakText(content);
+            if (role === 'assistant' && voiceOutput.checked) {
+                speakText(content);
+            }
         }
 
         function speakText(text) {
@@ -402,7 +418,9 @@
         async function chatWithAI(message) {
             try {
                 const cacheKey = modelSelect.value + ":" + message;
-                if (responseCache.has(cacheKey)) return responseCache.get(cacheKey);
+                if (responseCache.has(cacheKey)) {
+                    return responseCache.get(cacheKey);
+                }
 
                 const options = { model: modelSelect.value, max_tokens: 1000 };
                 if (modelSelect.value !== 'deepseek-r1') options.temperature = 0.7;
@@ -462,7 +480,9 @@
 
                 try {
                     let finalText = text;
-                    if (internetSearch.checked) finalText = text + " (please include up-to-date information from the internet if possible)";
+                    if (internetSearch.checked) {
+                        finalText = text + " (please include up-to-date information from the internet if possible)";
+                    }
                     const response = await chatWithAI(finalText);
                     addMessage('assistant', response);
                 } catch (error) {
@@ -478,14 +498,8 @@
         addMessage('system', 'Welcome to the infinite space! I work without any API keys. Try sending a message or request an image.');
     </script>
 
-    <!-- ===================== INJECTION: MULTI-AGENT + MEMORY + CRITIQUE ===================== -->
+    <!-- ===================== INJECTION #1: MULTI-AGENT + MEMORY + CRITIQUE ===================== -->
     <script>
-    /**
-     * === AMMAR//i\\CADEMY — AGENT INJECTION LAYER (Append-Only) ===
-     * Zero edits to your original code: we monkey-patch chatWithAI() safely.
-     * Adds: Multi-agent routing, memory, critique pass, adaptive style, RAG-lite.
-     */
-
     (function () {
       const waitFor = (fn, t = 0) => new Promise((res) => {
         const iv = setInterval(() => {
@@ -537,7 +551,4 @@
         const q = new Set(qTokens);
         let hit = 0;
         for (const t of docTokens) if (q.has(t)) hit++;
-        return hit / Math.sqrt(qTokens.length * docTokens.length);
-      }
-
-      function retrieveC
+     
