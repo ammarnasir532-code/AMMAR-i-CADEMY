@@ -3,77 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMMAR OMNI | AI LIVE CORE</title>
+    <title>AMMAR //i\\ OMNI | المحرك السيادي</title>
     <style>
-        :root { --gold: #d4af37; --bg: #020406; --neon: #00f2ff; --white: #ffffff; }
-        body { background: var(--bg); color: var(--white); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        #sidebar { width: 300px; background: #080a0c; border-left: 1px solid #222; display: flex; flex-direction: column; padding: 20px; }
-        #main-content { flex: 1; display: flex; flex-direction: column; background: radial-gradient(circle, #0a1118, #020406); }
+        :root { --gold: #d4af37; --bg: #05070a; --neon: #00f2ff; --white: #ffffff; }
+        body { background: var(--bg); color: var(--white); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        #sidebar { width: 280px; background: #0a0e14; border-left: 1px solid #222; display: flex; flex-direction: column; padding: 20px; }
+        #main-content { flex: 1; display: flex; flex-direction: column; background: radial-gradient(circle, #0f172a, #05070a); }
         header { padding: 15px; border-bottom: 2px solid var(--gold); text-align: center; background: #000; }
         #chat-window { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .msg { max-width: 85%; padding: 18px; border-radius: 15px; line-height: 1.8; animation: fadeIn 0.4s; white-space: pre-wrap; }
+        .msg { max-width: 85%; padding: 18px; border-radius: 15px; line-height: 1.8; font-size: 1.1em; animation: fadeIn 0.4s ease; white-space: pre-wrap; }
         .ai { background: rgba(0, 242, 255, 0.08); border-right: 4px solid var(--neon); align-self: flex-start; }
-        .user { background: rgba(212, 175, 55, 0.08); border-left: 4px solid var(--gold); align-self: flex-end; }
+        .user { background: rgba(212, 175, 55, 0.08); border-left: 4px solid var(--gold); align-self: flex-end; color: var(--gold); }
         #input-area { padding: 25px; background: #0a0e14; border-top: 1px solid #222; }
-        .controls { display: flex; gap: 12px; max-width: 1100px; margin: 0 auto; }
-        input[type="text"] { flex: 1; padding: 15px; border-radius: 30px; border: 1px solid #444; background: #000; color: white; outline: none; }
+        .input-wrapper { display: flex; gap: 10px; max-width: 1100px; margin: 0 auto; }
+        input { flex: 1; padding: 15px; border-radius: 30px; border: 1px solid #444; background: #000; color: white; outline: none; }
         .btn-send { background: var(--gold); color: black; padding: 12px 30px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; }
-        .api-input { background: #111; color: var(--gold); border: 1px solid var(--gold); padding: 10px; border-radius: 5px; width: 100%; margin-top: 10px; font-size: 0.8em; }
+        .loading { font-style: italic; color: var(--neon); animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <aside id="sidebar">
-    <div style="color:var(--gold); font-weight:bold; text-align:center; border-bottom:1px solid var(--gold); padding-bottom:10px;">إعدادات المحرك</div>
-    <p style="font-size: 0.75em; color: #888; margin-top: 20px;">أدخل مفتاح جوجل (API Key) لمرة واحدة لتفعيل الذكاء الحقيقي:</p>
-    <input type="password" id="apiKey" class="api-input" placeholder="Paste API Key here...">
-    <div id="history" style="flex:1; margin-top:20px; font-size: 0.85em; opacity: 0.5; overflow-y: auto;"></div>
+    <h2 style="color:var(--gold); text-align:center;">AMMAR OMNI</h2>
+    <p style="font-size: 0.8em; color: var(--neon); text-align:center;">● مفتاح الرنين مدمج ونشط</p>
+    <div id="history" style="flex:1; margin-top:20px; overflow-y:auto; opacity:0.5; font-size:0.9em;"></div>
 </aside>
 
 <main id="main-content">
-    <header><h2 style="color:var(--gold); margin:0; letter-spacing:2px;">AMMAR OMNI // LIVE</h2></header>
+    <header><h1 style="color:var(--gold); margin:0;">رابط الذكاء الحقيقي الحقيقي</h1></header>
     <div id="chat-window">
-        <div class="msg ai">نظام OMNI متصل بـ "بزوغ الطور". 
-ضع مفتاح الاتصال في القائمة الجانبية، وسأفتح لك بوابة الرنين المعلوماتي لقراءة الصور وتحليل الأكواد فوراً.</div>
+        <div class="msg ai">تم دمج المفتاح (AIzaSyA29...) بنجاح. 
+أنا الآن في وضع الاستعداد الكامل. بمجرد تفعيل المفتاح من حسابك، سأقوم بتحليل كل ما ترسله بذكاء "جومناي" الحقيقي.</div>
     </div>
     <div id="input-area">
         <div class="controls">
-            <input type="text" id="userInput" placeholder="اسأل أي سؤال عميق..." onkeypress="if(event.key==='Enter') startCall()">
-            <button class="btn-send" onclick="startCall()">تحليل</button>
+            <input type="text" id="userInput" placeholder="اسأل الخوارزمية السيادية..." onkeypress="if(event.key==='Enter') resonate()">
+            <button class="btn-send" onclick="resonate()">تحليل الطور</button>
         </div>
     </div>
 </main>
 
 <script>
-    // استعادة المفتاح تلقائياً من ذاكرة المتصفح
-    document.getElementById('apiKey').value = localStorage.getItem('ammar_key') || "";
+    // المفتاح الذي أرسلته مدمج هنا
+    const SYSTEM_KEY = "AIzaSyA29-QLnRfkTnU17JYTehUw8RLCLVQHrNs";
 
-    async function startCall() {
-        const key = document.getElementById('apiKey').value;
+    async function resonate() {
         const input = document.getElementById('userInput');
         const text = input.value.trim();
-        
-        if(!key) { alert("يجب وضع مفتاح API لفتح بوابة الذكاء."); return; }
         if(!text) return;
 
-        localStorage.setItem('ammar_key', key); // حفظ المفتاح للعمل التلقائي
         addMsg('user', text);
         input.value = "";
-        const aiDiv = addMsg('ai', 'جاري الرنين مع معالج Gemini وتوليد الاستجابة الحية...');
+        const aiDiv = addMsg('ai', '<span class="loading">جاري المعالجة عبر الوعي الشبكي لـ Gemini...</span>');
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${key}`, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${SYSTEM_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
             });
 
             const data = await response.json();
-            const result = data.candidates[0].content.parts[0].text;
-            aiDiv.innerText = result;
+            
+            if (data.error) {
+                aiDiv.innerHTML = `⚠️ <b>خطأ في المفتاح:</b> ${data.error.message}\n\nتأكد يا عمار أنك فعلت "Gemini API" داخل Google AI Studio لهذا المفتاح.`;
+            } else {
+                aiDiv.innerText = data.candidates[0].content.parts[0].text;
+            }
         } catch (e) {
-            aiDiv.innerText = "⚠️ فشل الاتصال. تأكد من المفتاح أو الاتصال بالشبكة.";
+            aiDiv.innerText = "⚠️ فشل الاتصال. تأكد من تفعيل المفتاح والإنترنت.";
         }
     }
 
@@ -81,7 +81,7 @@
         const win = document.getElementById('chat-window');
         const div = document.createElement('div');
         div.className = `msg ${role}`;
-        div.innerText = txt;
+        div.innerHTML = txt;
         win.appendChild(div);
         win.scrollTop = win.scrollHeight;
         return div;
