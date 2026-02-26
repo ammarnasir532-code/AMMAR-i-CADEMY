@@ -565,16 +565,30 @@
             } else {
                 addMessage('user', text);
                 userInput.value = '';
-                
-                try {
-                    let finalText = text;
-                    if (internetSearch.checked) {
-                        finalText = text + " (please include up-to-date information from the internet if possible)";
+
+                // التحقق مما إذا كان السؤال عن هوية المساعد
+                const lowerText = text.toLowerCase();
+                const identityQuestions = [
+                    'من انت', 'who are you', 'what is your name', 'your name',
+                    'صممك', 'who designed you', 'your creator', 'created by'
+                ];
+                const isIdentityQuestion = identityQuestions.some(q => lowerText.includes(q));
+
+                if (isIdentityQuestion) {
+                    // رد مباشر دون استدعاء API
+                    const creatorResponse = "I was designed by Ammar Nasir Hussein al-mantafji.";
+                    addMessage('assistant', creatorResponse);
+                } else {
+                    try {
+                        let finalText = text;
+                        if (internetSearch.checked) {
+                            finalText = text + " (please include up-to-date information from the internet if possible)";
+                        }
+                        const response = await chatWithAI(finalText);
+                        addMessage('assistant', response);
+                    } catch (error) {
+                        addMessage('system', `❌ Connection error: ${error.message}`);
                     }
-                    const response = await chatWithAI(finalText);
-                    addMessage('assistant', response);
-                } catch (error) {
-                    addMessage('system', `❌ Connection error: ${error.message}`);
                 }
             }
         });
@@ -585,8 +599,4 @@
             }
         });
 
-        // رسالة ترحيب
-        addMessage('system', 'Welcome to the infinite space! I work without any API keys. Try sending a message or request an image.');
-    </script>
-</body>
-</html>
+      
