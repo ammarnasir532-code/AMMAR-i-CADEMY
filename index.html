@@ -1,554 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMMAR//i\\CADEMY - Cosmic AI</title>
-    <!-- Puter.js (for AI) -->
-    <script src="https://js.puter.com/v2/"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMMAR//i\\CADEMY - Cosmic AI</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0ebe1;
-            color: #1e1e2e;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-        }
+  <!-- Puter.js (for AI) -->
+  <script src="https://js.puter.com/v2/"></script>
 
-        .container {
-            width: 100vw;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 0;
-            padding: 0;
-            box-shadow: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-        }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .brand { text-align: center; margin: 4px auto 2px auto; }
-        .brand .gold {
-            color: #D4AF37;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .brand .sub {
-            color: #5a5a7a;
-            font-size: 0.6rem;
-            font-weight: 400;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            margin-top: 1px;
-        }
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:#f0ebe1; color:#1e1e2e;
+      min-height:100vh; display:flex; justify-content:center; align-items:center;
+      padding:0;
+    }
 
-        header { text-align: center; flex-shrink: 0; margin-bottom: 0; }
+    .container{
+      width:100vw; height:100vh;
+      background:rgba(255,255,255,0.85);
+      backdrop-filter:blur(10px);
+      border-radius:0; padding:0;
+      box-shadow:none; border:none;
+      display:flex; flex-direction:column;
+    }
 
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
-        }
+    .brand{ text-align:center; margin:4px auto 2px auto; }
+    .brand .gold{
+      color:#D4AF37; font-size:1rem; font-weight:700;
+      letter-spacing:0.5px;
+      text-shadow:0 2px 4px rgba(0,0,0,0.1);
+    }
+    .brand .sub{
+      color:#5a5a7a; font-size:0.6rem; font-weight:400;
+      text-shadow:0 1px 2px rgba(0,0,0,0.05);
+      margin-top:1px;
+    }
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            min-height: 0;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.05);
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 20px 20px 0 0;
-            margin: 0 5px;
-        }
+    header{ text-align:center; flex-shrink:0; margin-bottom:0; }
 
-        .message { margin-bottom: 10px; display: flex; flex-direction: column; position: relative; }
-        .message.user { align-items: flex-end; }
-        .message.assistant { align-items: flex-start; }
-        .message.system { align-items: center; }
+    .chat-container{ display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
 
-        .message .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            max-width: 80%;
-        }
-        .message.user .content-wrapper { align-items: flex-end; }
+    .chat-messages{
+      flex:1; overflow-y:auto; padding:15px; min-height:0;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.6), 0 4px 15px rgba(0,0,0,0.05);
+      background: rgba(255,255,255,0.3);
+      border-radius:20px 20px 0 0;
+      margin:0 5px;
+    }
 
-        .message .content {
-            padding: 6px 12px;
-            border-radius: 15px;
-            color: #1e1e2e;
-            font-size: 0.85em;
-            line-height: 1.3;
-            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5), 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            word-break: break-word;
-        }
-        .message.user .content { background: rgba(255, 255, 240, 0.7); }
-        .message.assistant .content { background: rgba(255, 255, 240, 0.9); }
-        .message.system .content { background: rgba(249, 226, 175, 0.9); }
+    .message{ margin-bottom:10px; display:flex; flex-direction:column; position:relative; }
+    .message.user{ align-items:flex-end; }
+    .message.assistant{ align-items:flex-start; }
+    .message.system{ align-items:center; }
 
-        .copy-under {
-            background: rgba(255, 255, 255, 0.5);
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            margin-top: 4px;
-            color: #333;
-            transition: 0.2s;
-            display: inline-block;
-        }
-        .copy-under:hover {
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        .copy-under.copied { background: #4CAF50; color: white; box-shadow: none; }
+    .message .content-wrapper{
+      display:flex; flex-direction:column; align-items:flex-start; max-width:80%;
+    }
+    .message.user .content-wrapper{ align-items:flex-end; }
 
-        .message .time { font-size: 0.55em; color: #5a5a7a; margin-top: 3px; margin-left: 5px; }
+    .message .content{
+      padding:6px 12px; border-radius:15px;
+      color:#1e1e2e; font-size:0.85em; line-height:1.3;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.5), 0 2px 5px rgba(0,0,0,0.05);
+      border:1px solid rgba(255,215,0,0.2);
+      word-break: break-word;
+    }
+    .message.user .content{ background: rgba(255,255,240,0.7); }
+    .message.assistant .content{ background: rgba(255,255,240,0.9); }
+    .message.system .content{ background: rgba(249,226,175,0.9); }
 
-        .input-frame {
-            margin-left: 0.5cm;
-            margin-right: 0.5cm;
-            height: 4cm;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            padding: 6px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 5px;
-        }
+    .copy-under{
+      background: rgba(255,255,255,0.5);
+      border:none; border-radius:8px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      cursor:pointer; font-size:0.7rem;
+      padding:2px 8px; margin-top:4px;
+      color:#333; transition:0.2s; display:inline-block;
+    }
+    .copy-under:hover{
+      background: rgba(255,255,255,0.8);
+      box-shadow:0 4px 8px rgba(0,0,0,0.15);
+    }
+    .copy-under.copied{ background:#4CAF50; color:white; box-shadow:none; }
 
-        .input-row { display: flex; align-items: center; gap: 5px; }
+    .message .time{
+      font-size:0.55em; color:#5a5a7a;
+      margin-top:3px; margin-left:5px;
+    }
 
-        .input-row textarea {
-            flex: 1;
-            padding: 6px 10px;
-            border-radius: 20px;
-            border: 2px solid rgba(212, 175, 55, 0.6);
-            background: white;
-            color: #1e1e2e;
-            font-size: 0.85em;
-            resize: none;
-            font-family: inherit;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03), 0 2px 5px rgba(255,215,0,0.1);
-            height: 1.8cm;
-            min-height: 1.8cm;
-        }
+    .input-frame{
+      margin-left:0.5cm; margin-right:0.5cm;
+      height:4cm;
+      background: rgba(255,255,255,0.6);
+      border:1px solid rgba(255,215,0,0.3);
+      border-radius:20px;
+      backdrop-filter: blur(5px);
+      padding:6px 10px;
+      display:flex; flex-direction:column;
+      justify-content:space-between;
+      box-shadow: 0 8px 20px rgba(255,255,255,0.3), 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom:5px;
+    }
 
-        .circle-send {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid #D4AF37;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #D4AF37;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-        .circle-send:hover { background: rgba(212, 175, 55, 0.1); transform: scale(1.05); }
+    .input-row{ display:flex; align-items:center; gap:5px; }
 
-        .compact-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+    .input-row textarea{
+      flex:1;
+      padding:6px 10px;
+      border-radius:20px;
+      border:2px solid rgba(212,175,55,0.6);
+      background:white; color:#1e1e2e;
+      font-size:0.85em;
+      resize:none; font-family:inherit;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.03), 0 2px 5px rgba(255,215,0,0.1);
+      height:1.8cm; min-height:1.8cm;
+    }
 
-        .upload-icon-small {
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            color: #2d2d3a;
-            transition: 0.2s;
-            padding: 0 3px;
-        }
-        .upload-icon-small:hover { color: #D4AF37; }
+    .circle-send{
+      width:38px; height:38px; border-radius:50%;
+      background:white;
+      border:2px solid #D4AF37;
+      box-shadow:0 4px 10px rgba(212,175,55,0.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem;
+      cursor:pointer; transition:0.2s;
+      color:#D4AF37;
+      flex-shrink:0;
+      line-height:1;
+    }
+    .circle-send:hover{
+      background: rgba(212,175,55,0.1);
+      transform: scale(1.05);
+    }
 
-        .small-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #D4AF37;
-            border-radius: 30px;
-            padding: 3px 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1e1e2e;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 8px rgba(212, 175, 55, 0.1);
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
-        }
-        .small-btn:hover { background: rgba(212, 175, 55, 0.15); transform: translateY(-2px); }
-        .small-btn.active { background: rgba(212, 175, 55, 0.25); border-color: #b8860b; }
+    .compact-row{
+      display:flex; align-items:center; justify-content:center;
+      gap:8px; flex-wrap:wrap;
+    }
 
-        .model-selector select {
-            padding: 3px 8px;
-            border-radius: 20px;
-            border: 1px solid #D4AF37;
-            background: white;
-            color: #1e1e2e;
-            font-size: 0.7rem;
-            cursor: pointer;
-        }
+    .upload-icon-small{
+      background:none; border:none;
+      font-size:1.1rem;
+      cursor:pointer; color:#2d2d3a;
+      transition:0.2s;
+      padding:0 3px;
+    }
+    .upload-icon-small:hover{ color:#D4AF37; }
 
-        .hidden-check { display: none; }
+    .small-btn{
+      background: rgba(255,255,255,0.9);
+      border:2px solid #D4AF37;
+      border-radius:30px;
+      padding:3px 10px;
+      font-size:0.75rem;
+      font-weight:600;
+      color:#1e1e2e;
+      cursor:pointer;
+      transition:0.2s;
+      box-shadow:0 4px 8px rgba(212,175,55,0.1);
+      backdrop-filter: blur(4px);
+      white-space: nowrap;
+    }
+    .small-btn:hover{
+      background: rgba(212,175,55,0.15);
+      transform: translateY(-2px);
+    }
+    .small-btn.active{
+      background: rgba(212,175,55,0.25);
+      border-color:#b8860b;
+    }
 
-        .image-result { margin-top: 8px; text-align: center; }
+    .model-selector select{
+      padding:3px 8px;
+      border-radius:20px;
+      border:1px solid #D4AF37;
+      background:white;
+      color:#1e1e2e;
+      font-size:0.7rem;
+      cursor:pointer;
+    }
 
-        .image-result img {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 2px solid #D4AF37;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .image-result img:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+    .hidden-check{ display:none; }
 
-        .download-link {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 4px 12px;
-            background: #D4AF37;
-            color: white;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        .download-link:hover { background: #b8860b; }
+    .image-result{ margin-top:8px; text-align:center; }
 
-        footer {
-            text-align: center;
-            margin-top: 2px;
-            color: #5a5a7a;
-            font-size: 0.6rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding-top: 2px;
-            flex-shrink: 0;
-        }
-    </style>
+    .image-result img{
+      max-width:200px; max-height:200px;
+      border-radius:15px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.2);
+      border:2px solid #D4AF37;
+      cursor:pointer; transition:0.2s;
+    }
+    .image-result img:hover{
+      transform: scale(1.02);
+      box-shadow:0 8px 20px rgba(212,175,55,0.3);
+    }
+
+    .download-link{
+      display:inline-block;
+      margin-top:5px;
+      padding:4px 12px;
+      background:#D4AF37;
+      color:white;
+      border-radius:20px;
+      text-decoration:none;
+      font-size:0.7rem;
+      font-weight:bold;
+    }
+    .download-link:hover{ background:#b8860b; }
+
+    footer{
+      text-align:center;
+      margin-top:2px;
+      color:#5a5a7a;
+      font-size:0.6rem;
+      border-top:1px solid rgba(212,175,55,0.2);
+      padding-top:2px;
+      flex-shrink:0;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <div class="brand">
-                <div class="gold">AMMAR//i\\CADEMY</div>
-                <div class="sub">Ammar Nasir Hussein al-mantafji 2026</div>
-            </div>
-        </header>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="gold">AMMAR//i\\CADEMY</div>
+        <div class="sub">Ammar Nasir Hussein al-mantafji 2026</div>
+      </div>
+    </header>
 
-        <div class="chat-container">
-            <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages"></div>
 
-            <div class="input-frame">
-                <input type="checkbox" id="voiceOutput" class="hidden-check">
-                <input type="checkbox" id="imageMode" class="hidden-check">
-                <input type="checkbox" id="internetSearch" class="hidden-check">
+      <div class="input-frame">
+        <input type="checkbox" id="voiceOutput" class="hidden-check">
+        <input type="checkbox" id="imageMode" class="hidden-check">
+        <input type="checkbox" id="internetSearch" class="hidden-check">
 
-                <div class="input-row">
-                    <textarea id="userInput" placeholder="Type your message here..." rows="1"></textarea>
-                    <button class="circle-send" id="sendBtn">↑</button>
-                </div>
-
-                <div class="compact-row">
-                    <button class="upload-icon-small" id="uploadBtn" title="Upload file">📎</button>
-                    <button class="small-btn" id="deepThinkBtn">DeepThink</button>
-                    <button class="small-btn" id="searchBtn">Search</button>
-                    <div class="model-selector">
-                        <select id="modelSelect">
-                            <option value="gpt-5-nano">GPT-5 Nano</option>
-                            <option value="claude-opus-4">Claude Opus 4</option>
-                            <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
-                            <option value="deepseek-r1" selected>DeepSeek R1</option>
-                        </select>
-                    </div>
-                </div>
-
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-            </div>
-
-            <div class="image-result" id="imageResult"></div>
+        <div class="input-row">
+          <textarea id="userInput" placeholder="Type your message here..." rows="1"></textarea>
+          <button class="circle-send" id="sendBtn">↑</button>
         </div>
 
-        <footer>⚡ No API keys • Puter.js + Pollinations.ai • to infinity ✨</footer>
+        <div class="compact-row">
+          <button class="upload-icon-small" id="uploadBtn" title="Upload file">📎</button>
+          <button class="small-btn" id="deepThinkBtn">DeepThink</button>
+          <button class="small-btn" id="searchBtn">Search</button>
+
+          <div class="model-selector">
+            <select id="modelSelect">
+              <option value="gpt-5-nano">GPT-5 Nano</option>
+              <option value="claude-opus-4">Claude Opus 4</option>
+              <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
+              <option value="deepseek-r1" selected>DeepSeek R1</option>
+            </select>
+          </div>
+        </div>
+
+        <input type="file" id="fileInput" accept="image/*" style="display:none;">
+      </div>
+
+      <div class="image-result" id="imageResult"></div>
     </div>
 
-    <script>
-        // DOM elements
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const voiceOutput = document.getElementById('voiceOutput');
-        const imageMode = document.getElementById('imageMode');
-        const internetSearch = document.getElementById('internetSearch');
-        const modelSelect = document.getElementById('modelSelect');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const fileInput = document.getElementById('fileInput');
-        const imageResult = document.getElementById('imageResult');
-        const deepThinkBtn = document.getElementById('deepThinkBtn');
-        const searchBtn = document.getElementById('searchBtn');
+    <footer>⚡ No API keys • Puter.js + Pollinations.ai • to infinity ✨</footer>
+  </div>
 
-        let deepThinkActive = false;
-        let searchActive = false;
+  <script>
+    // DOM elements
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const voiceOutput = document.getElementById('voiceOutput');
+    const imageMode = document.getElementById('imageMode');
+    const internetSearch = document.getElementById('internetSearch');
+    const modelSelect = document.getElementById('modelSelect');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const fileInput = document.getElementById('fileInput');
+    const imageResult = document.getElementById('imageResult');
+    const deepThinkBtn = document.getElementById('deepThinkBtn');
+    const searchBtn = document.getElementById('searchBtn');
 
-        // Cache for faster learning
-        const responseCache = new Map();
+    let deepThinkActive = false;
+    let searchActive = false;
 
-        // Copy function
-        window.copyText = function(element, text) {
-            navigator.clipboard.writeText(text).then(() => {
-                element.classList.add('copied');
-                element.textContent = '✓ copied';
-                setTimeout(() => {
-                    element.classList.remove('copied');
-                    element.textContent = 'copy';
-                }, 2000);
-            }).catch(err => {
-                console.error('Copy failed:', err);
-                alert('Failed to copy text');
-            });
-        };
+    // Cache for faster learning
+    const responseCache = new Map();
 
-        deepThinkBtn.addEventListener('click', () => {
-            deepThinkActive = !deepThinkActive;
-            if (deepThinkActive) {
-                modelSelect.value = 'deepseek-r1';
-                deepThinkBtn.classList.add('active');
-            } else {
-                modelSelect.value = 'gpt-5-nano';
-                deepThinkBtn.classList.remove('active');
-            }
-        });
-
-        searchBtn.addEventListener('click', () => {
-            searchActive = !searchActive;
-            internetSearch.checked = searchActive;
-            if (searchActive) searchBtn.classList.add('active');
-            else searchBtn.classList.remove('active');
-        });
-
-        uploadBtn.addEventListener('click', () => fileInput.click());
-
-        function addMessage(role, content, isHtml = false) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${role}`;
-
-            const wrapper = document.createElement('div');
-            wrapper.className = 'content-wrapper';
-
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'content';
-            if (isHtml) contentDiv.innerHTML = content;
-            else contentDiv.textContent = content;
-
-            wrapper.appendChild(contentDiv);
-
-            const copyUnder = document.createElement('span');
-            copyUnder.className = 'copy-under';
-            copyUnder.textContent = 'copy';
-            copyUnder.onclick = function() { copyText(this, contentDiv.textContent || contentDiv.innerText); };
-            wrapper.appendChild(copyUnder);
-
-            msgDiv.appendChild(wrapper);
-
-            const timeSpan = document.createElement('span');
-            timeSpan.className = 'time';
-            const now = new Date();
-            timeSpan.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            msgDiv.appendChild(timeSpan);
-
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            if (role === 'assistant' && voiceOutput.checked) {
-                speakText(content);
-            }
-        }
-
-        function speakText(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = 1;
-            utterance.pitch = 1;
-            speechSynthesis.speak(utterance);
-        }
-
-        async function generateImage(prompt) {
-            const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}`;
-            imageResult.innerHTML = `
-                <img src="${imgUrl}" alt="${prompt}" onclick="window.open('${imgUrl}')">
-                <br>
-                <a href="${imgUrl}" download="${prompt.replace(/\s+/g, '_')}.png" class="download-link">📥 Download Image</a>
-            `;
-            return imgUrl;
-        }
-
-        async function handleImageRequest(text) {
-            const enhancedPrompt = await chatWithAI("Improve this prompt for an image generation: " + text);
-            return generateImage(enhancedPrompt);
-        }
-
-        async function chatWithAI(message) {
-            try {
-                const cacheKey = modelSelect.value + ":" + message;
-                if (responseCache.has(cacheKey)) {
-                    return responseCache.get(cacheKey);
-                }
-
-                const options = { model: modelSelect.value, max_tokens: 1000 };
-                if (modelSelect.value !== 'deepseek-r1') options.temperature = 0.7;
-
-                const response = await puter.ai.chat(message, options);
-
-                responseCache.set(cacheKey, response);
-                if (responseCache.size > 100) {
-                    const firstKey = responseCache.keys().next().value;
-                    responseCache.delete(firstKey);
-                }
-                return response;
-            } catch (error) {
-                console.error('Puter.ai error:', error);
-                throw error;
-            }
-        }
-
-        fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                const imageData = event.target.result;
-                addMessage('user', '📷 [Image uploaded]');
-
-                try {
-                    const response = await puter.ai.chat(
-                        "Analyze this image in detail, tell me what you see.",
-                        imageData,
-                        { model: modelSelect.value }
-                    );
-                    addMessage('assistant', response);
-                } catch (error) {
-                    addMessage('system', `❌ Error analyzing image: ${error.message}`);
-                }
-            };
-            reader.readAsDataURL(file);
-        });
-
-        sendBtn.addEventListener('click', async () => {
-            const text = userInput.value.trim();
-            if (!text && !imageMode.checked) return;
-
-            if (imageMode.checked || text.toLowerCase().includes("صورة") || text.toLowerCase().includes("image") || text.toLowerCase().includes("picture")) {
-                addMessage('user', `🖼️ ${text}`);
-                userInput.value = '';
-                try {
-                    await handleImageRequest(text);
-                } catch (error) {
-                    addMessage('system', `❌ Error generating image: ${error.message}`);
-                }
-            } else {
-                addMessage('user', text);
-                userInput.value = '';
-
-                try {
-                    let finalText = text;
-                    if (internetSearch.checked) {
-                        finalText = text + " (please include up-to-date information from the internet if possible)";
-                    }
-                    const response = await chatWithAI(finalText);
-                    addMessage('assistant', response);
-                } catch (error) {
-                    addMessage('system', `❌ Connection error: ${error.message}`);
-                }
-            }
-        });
-
-        userInput.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'Enter') sendBtn.click();
-        });
-
-        addMessage('system', 'Welcome to the infinite space! I work without any API keys. Try sending a message or request an image.');
-    </script>
-
-    <!-- ===================== INJECTION #1: MULTI-AGENT + MEMORY + CRITIQUE ===================== -->
-    <script>
-    (function () {
-      const waitFor = (fn, t = 0) => new Promise((res) => {
-        const iv = setInterval(() => {
-          try { if (fn()) { clearInterval(iv); res(true); } } catch (_) {}
-          if ((t += 50) > 6000) { clearInterval(iv); res(false); }
-        }, 50);
+    // Copy function
+    window.copyText = function(element, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        element.classList.add('copied');
+        element.textContent = '✓ copied';
+        setTimeout(() => {
+          element.classList.remove('copied');
+          element.textContent = 'copy';
+        }, 2000);
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        alert('Failed to copy text');
       });
+    };
 
-      const nowISO = () => new Date().toISOString();
-      const safeJSON = {
-        parse(s, fallback) { try { return JSON.parse(s); } catch { return fallback; } },
-        str(o, fallback="{}") { try { return JSON.stringify(o); } catch { return fallback; } }
+    deepThinkBtn.addEventListener('click', () => {
+      deepThinkActive = !deepThinkActive;
+      if (deepThinkActive) {
+        modelSelect.value = 'deepseek-r1';
+        deepThinkBtn.classList.add('active');
+      } else {
+        modelSelect.value = 'gpt-5-nano';
+        deepThinkBtn.classList.remove('active');
+      }
+    });
+
+    searchBtn.addEventListener('click', () => {
+      searchActive = !searchActive;
+      internetSearch.checked = searchActive;
+      if (searchActive) searchBtn.classList.add('active');
+      else searchBtn.classList.remove('active');
+    });
+
+    uploadBtn.addEventListener('click', () => fileInput.click());
+
+    function addMessage(role, content, isHtml = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${role}`;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'content-wrapper';
+
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'content';
+      if (isHtml) contentDiv.innerHTML = content;
+      else contentDiv.textContent = content;
+
+      wrapper.appendChild(contentDiv);
+
+      const copyUnder = document.createElement('span');
+      copyUnder.className = 'copy-under';
+      copyUnder.textContent = 'copy';
+      copyUnder.onclick = function() { copyText(this, contentDiv.textContent || contentDiv.innerText); };
+      wrapper.appendChild(copyUnder);
+
+      msgDiv.appendChild(wrapper);
+
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'time';
+      const now = new Date();
+      timeSpan.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      msgDiv.appendChild(timeSpan);
+
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      if (role === 'assistant' && voiceOutput.checked) {
+        speakText(content);
+      }
+    }
+    window.addMessage = addMessage;
+
+    function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      speechSynthesis.speak(utterance);
+    }
+
+    async function generateImage(prompt) {
+      const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}`;
+      imageResult.innerHTML = `
+        <img src="${imgUrl}" alt="${prompt}" onclick="window.open('${imgUrl}')">
+        <br>
+        <a href="${imgUrl}" download="${prompt.replace(/\s+/g, '_')}.png" class="download-link">📥 Download Image</a>
+      `;
+      return imgUrl;
+    }
+
+    async function handleImageRequest(text) {
+      const enhancedPrompt = await chatWithAI("Improve this prompt for an image generation: " + text);
+      return generateImage(enhancedPrompt);
+    }
+
+    async function chatWithAI(message) {
+      try {
+        const cacheKey = modelSelect.value + ":" + message;
+        if (responseCache.has(cacheKey)) return responseCache.get(cacheKey);
+
+        const options = { model: modelSelect.value, max_tokens: 1000 };
+        if (modelSelect.value !== 'deepseek-r1') options.temperature = 0.7;
+
+        const response = await puter.ai.chat(message, options);
+
+        responseCache.set(cacheKey, response);
+        if (responseCache.size > 100) {
+          const firstKey = responseCache.keys().next().value;
+          responseCache.delete(firstKey);
+        }
+        return response;
+      } catch (error) {
+        console.error('Puter.ai error:', error);
+        throw error;
+      }
+    }
+    window.chatWithAI = chatWithAI;
+
+    // Original image handler stays, but later Injection #7 overrides it safely
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const imageData = event.target.result;
+        addMessage('user', '📷 [Image uploaded]');
+
+        try {
+          const response = await puter.ai.chat(
+            "Analyze this image in detail, tell me what you see.",
+            imageData,
+            { model: modelSelect.value }
+          );
+          addMessage('assistant', response);
+        } catch (error) {
+          addMessage('system', `❌ Error analyzing image: ${error.message}`);
+        }
       };
+      reader.readAsDataURL(file);
+    });
 
-      const MEM_KEY = "ammari_academy_memory_v1";
-      const STAT_KEY = "ammari_academy_stats_v1";
+    sendBtn.addEventListener('click', async () => {
+      const text = userInput.value.trim();
+      if (!text && !imageMode.checked) return;
 
-      function loadMem() {
-        return safeJSON.parse(localStorage.getItem(MEM_KEY), {
-          facts: [],
-          summaries: [],
-          interactions: [],
-          user_style: { tone: "neutral", lang: "auto" }
-        });
+      if (imageMode.checked || text.toLowerCase().includes("صورة") || text.toLowerCase().includes("image") || text.toLowerCase().includes("picture")) {
+        addMessage('user', `🖼️ ${text}`);
+        userInput.value = '';
+        try {
+          await handleImageRequest(text);
+        } catch (error) {
+          addMessage('system', `❌ Error generating image: ${error.message}`);
+        }
+      } else {
+        addMessage('user', text);
+        userInput.value = '';
+
+        try {
+          let finalText = text;
+          if (internetSearch.checked) {
+            finalText = text + " (please include up-to-date information from the internet if possible)";
+          }
+          const response = await chatWithAI(finalText);
+          addMessage('assistant', response);
+        } catch (error) {
+          addMessage('system', `❌ Connection error: ${error.message}`);
+        }
       }
-      function saveMem(mem) { localStorage.setItem(MEM_KEY, safeJSON.str(mem)); }
+    });
 
-      function loadStats() {
-        return safeJSON.parse(localStorage.getItem(STAT_KEY), {
-          cache_hits: 0,
-          cache_misses: 0,
-          routed: {},
-          last_compact_summary: ""
-        });
+    userInput.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        sendBtn.click();
       }
-      function saveStats(st) { localStorage.setItem(STAT_KEY, safeJSON.str(st)); }
+    });
 
-      function tokenize(text) {
-        return (text || "")
-          .toLowerCase()
-          .replace(/[^\p{L}\p{N}\s]/gu, " ")
-          .split(/\s+/)
-          .filter(w => w.length >= 3)
-          .slice(0, 300);
-      }
+    // Welcome message
+    addMessage('system', 'Welcome to the infinite space! I work without any API keys. Try sending a message or request an image.');
+  </script>
 
-      function scoreOverlap(qTokens, docTokens) {
-        if (!qTokens.length || !docTokens.length) return 0;
-        const q = new Set(qTokens);
-        let hit = 0;
-        for (const t of docTokens) if (q.has(t)) hit++;
-     
+  <!-- ===================== INJECTION #1: MULTI-AGENT + MEMORY + CRITIQUE (Append-Only) ===================== -->
+  <script>
+  (function () {
+    const waitFor = (fn, t = 0) => new Promise((res) => {
+      const iv = setInterval(() => {
+        try { if (fn()) { clearInterval(iv); res(true); } } catch (_) {}
+        if ((t += 50) > 6000) { clearInterval(iv); res(false); }
+      }, 50);
+    });
+
+    const nowISO = () => new Date().toISOString();
+    const safeJSON = {
+      parse(s, fallback) { try { return JSON.parse(s); } catch { return fallback; } },
+      str(o, fallback="{}") { try { return JSON.stringify(o); } catch { return fallback; } }
+    };
+
+    const MEM_KEY = "ammari_academy_memory_v1";
+    const STAT_KEY = "ammari_academy_stats_v1";
+
+    function loadMem() {
+      return safeJSON.parse(localStorage.getItem(MEM_KEY), {
+        facts: [],
+        summaries: [],
+        interactions: [],
+        user_style: { tone: "neutral", lang: "auto" }
+      });
+    }
+    function saveMem(mem) { localStorage.setItem(MEM_KEY, safeJSON.str(mem)); }
+
+    function loadStats() {
+      return safeJSON.parse(localStorage.getItem(STAT_KEY), {
+        cache_hits: 0,
+        cache_misses: 0,
+        routed: {},
+        last_compact_summary: ""
+      });
+    }
+    function saveStats(st) { localStorage.setItem(STAT_KEY, safeJSON.str(st)); }
+
+    function tokenize(text) {
+      return (text || "")
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s]/gu, " ")
+        .split(/\s+/)
+        .filter(w => w.length >= 3)
+        .slice(0, 300);
+    }
+
+    function scoreOverlap(qTokens, docTokens) {
+      if (!qTokens.length || !docTokens.length) return 0;
+      const q = new Set(qTokens);
+      let hit = 0;
+      for (const t of docTokens) if (q.has(t)) hit++;
+      return hit / Math.sqrt(qTokens.length * docTokens.length);
+    }
+
+    function retrieveContext(mem, query, k = 6) {
+      const qT = tokenize(query);
+      const pool = [];
+      for (const f of mem.facts) pool.push({ type: "fact", text: f.text, tok: tokenize(f.text) });
+      for (const s of mem.summaries) pool.push({ type: "summary", text: s.text, tok: tokenize(s.text) });
+      for (const it of mem.interactions.slice(-60)) pool.push({ type: "log", text: it.q + " " + it.a, tok: tokenize(it.q + " " + it.a) });
+
+      const scored = pool
+        .map(p => ({ ...p, score: scoreOverlap(qT, p.tok) }))
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, k);
+
+      return scored.map(x => `• [${x.type}] ${x.text}`).join("\n").trim();
+    }
+
+    const AGENTS = {
+      router: { system: `You are a strict task router. Decide which specialist agents should handle the user's input.
+Return ONLY JSON with keys:
+{"needs_search": boolean, "agents": string[], "intent": string, "risk": "low"|"medium"|"high"}.
+Agents must be chosen from: ["analyst","engineer","researcher","writer","critic","tutor","summarizer"].
+Keep it minimal.` },
+      analyst: { system: `You analyze the user's request, extract constraints, and produce a clear plan and key points. No fluff.` },
+      engineer: { system: `You produce implementation-ready technical output (code, steps, debugging). Keep changes minimal and safe.` },
+      researcher: { system: `You provide accurate, cautious reasoning. If internet is not available, say so and avoid guessing.` },
+      writer: { system: `You craft the final user-facing answer: structured, clear, concise. Match user's language.` },
+      critic: { system: `You review the drafted answer for errors, missing constraints, and improve it. Provide a revised answer.` },
+      tutor: { system: `You explain concepts step-by-step with examples, but keep it practical.` },
+      summarizer: { system: `Summarize the conversation turn into a compact memory note. Output ONLY the summary text.` }
+    };
+
+    function inferLang(text) { return /[\u0600-\u06FF]/.test(text || "") ? "ar" : "en"; }
+    function detectTone(text) {
+      const t = (text || "").toLowerCase();
+      if (t.includes("صارم") || t.includes("رسمي")) return "formal";
+      if (t.includes("بلهجة") || t.includes("عراقي")) return "dialect";
+      return "neutral";
+    }
+
+    async function callLLM(model, messages, options = {}) {
+      const packed = messages.map(m => `[${(m.role||"user").toUpperCase()}]\n${m.content}\n`).join("\n");
+      const opts = { model, max_tokens: options.max_tokens ?? 1200 };
+      if (model !== "deepseek-r1") opts.temperature = options.temperature ?? 0.6;
+      return await puter.ai.chat(packed, opts);
+    }
+
+    function safeParseJSON(text) {
+      const s = (text || "").trim();
+      try { return JSON.parse(s); } catch (_) {}
+      const m = s.match(/\{[\s\S]*\}/);
+      if (m) { try { return JSON.parse(m[0]); } catch (_) {} }
+                  
