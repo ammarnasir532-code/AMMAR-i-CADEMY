@@ -1,592 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMMAR//i\\CADEMY - Cosmic AI</title>
-    <!-- Puter.js (for AI) -->
-    <script src="https://js.puter.com/v2/"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMMAR//i\\CADEMY - Cosmic AI (UltraFast)</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0ebe1;
-            color: #1e1e2e;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-        }
+  <!-- Puter.js -->
+  <script src="https://js.puter.com/v2/"></script>
 
-        .container {
-            width: 100vw;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 0;
-            padding: 0;
-            box-shadow: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-        }
+  <style>
+    /* =========================
+       BLUE ULTRAFAST THEME
+       ========================= */
+    :root{
+      --bg:#071427;
+      --panel:rgba(10, 25, 47, 0.78);
+      --panel2:rgba(15, 32, 58, 0.55);
+      --text:#eaf2ff;
+      --muted:#9bb7e6;
+      --neon:#2aa7ff;
+      --neon2:#6ee7ff;
+      --border:rgba(42,167,255,0.35);
+      --shadow:0 10px 30px rgba(0, 140, 255, 0.15);
+      --shadow2:0 12px 28px rgba(0, 140, 255, 0.12);
+    }
 
-        .brand {
-            text-align: center;
-            margin: 4px auto 2px auto;
-        }
-        .brand .gold {
-            color: #D4AF37;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .brand .sub {
-            color: #5a5a7a;
-            font-size: 0.6rem;
-            font-weight: 400;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            margin-top: 1px;
-        }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-        header {
-            text-align: center;
-            flex-shrink: 0;
-            margin-bottom: 0;
-        }
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(1000px 700px at 20% 10%, rgba(42,167,255,0.25), transparent 60%),
+        radial-gradient(900px 650px at 80% 90%, rgba(110,231,255,0.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0;
+    }
 
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
-        }
+    .container{
+      width:100vw;
+      height:100vh;
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+    }
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            min-height: 0;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.05);
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 20px 20px 0 0;
-            margin: 0 5px;
-        }
+    header { text-align:center; flex-shrink:0; padding-top:6px; }
+    .brand { text-align:center; margin: 0 auto; }
+    .brand .gold{
+      color: var(--neon2);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-shadow: 0 0 12px rgba(110,231,255,0.35);
+    }
+    .brand .sub{
+      color: var(--muted);
+      font-size: 0.62rem;
+      margin-top: 2px;
+      opacity: 0.95;
+    }
 
-        .message {
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    .chat-container{
+      display:flex;
+      flex-direction:column;
+      flex:1;
+      min-height:0;
+      overflow:hidden;
+      padding-top: 4px;
+    }
 
-        .message.user {
-            align-items: flex-end;
-        }
+    .chat-messages{
+      flex:1;
+      overflow-y:auto;
+      padding: 14px;
+      min-height:0;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 18px 18px 0 0;
+      margin: 0 8px;
+      box-shadow: inset 0 0 25px rgba(42,167,255,0.08);
+    }
 
-        .message.assistant {
-            align-items: flex-start;
-        }
+    .message{
+      margin-bottom: 10px;
+      display:flex;
+      flex-direction:column;
+    }
+    .message.user{ align-items:flex-end; }
+    .message.assistant{ align-items:flex-start; }
+    .message.system{ align-items:center; }
 
-        .message.system {
-            align-items: center;
-        }
+    .message .content-wrapper{
+      display:flex;
+      flex-direction:column;
+      max-width: 86%;
+      gap: 4px;
+    }
+    .message.user .content-wrapper{ align-items:flex-end; }
+    .message.assistant .content-wrapper{ align-items:flex-start; }
+    .message.system .content-wrapper{ align-items:center; }
 
-        .message .content-wrapper {
-            display: flex;
-            flex-direction: column; /* تغيير إلى عمودي لوضع copy أسفل */
-            align-items: flex-start;
-            max-width: 80%;
-        }
-        .message.user .content-wrapper {
-            align-items: flex-end;
-        }
+    .message .content{
+      padding: 8px 12px;
+      border-radius: 14px;
+      font-size: 0.88em;
+      line-height: 1.35;
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 18px rgba(0, 140, 255, 0.10);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .message.user .content{ background: rgba(10, 25, 47, 0.78); }
+    .message.assistant .content{ background: rgba(12, 32, 60, 0.86); }
+    .message.system .content{
+      background: rgba(20, 55, 95, 0.75);
+      color: var(--neon2);
+      text-align:center;
+    }
 
-        .message .content {
-            padding: 6px 12px;
-            border-radius: 15px;
-            color: #1e1e2e;
-            font-size: 0.85em;
-            line-height: 1.3;
-            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5), 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            word-break: break-word;
-        }
+    .copy-under{
+      display:inline-block;
+      width: fit-content;
+      background: rgba(10, 25, 47, 0.55);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      cursor:pointer;
+      user-select:none;
+      transition: 0.18s;
+    }
+    .copy-under:hover{
+      background: rgba(15, 40, 75, 0.75);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .copy-under.copied{
+      background: rgba(42, 167, 255, 0.22);
+      border-color: rgba(110,231,255,0.65);
+      color: var(--neon2);
+      box-shadow: none;
+      transform: none;
+    }
 
-        .message.user .content {
-            background: rgba(255, 255, 240, 0.7);
-        }
+    .message .time{
+      font-size: 0.58em;
+      color: rgba(155,183,230,0.85);
+      margin-top: 2px;
+      margin-left: 6px;
+    }
 
-        .message.assistant .content {
-            background: rgba(255, 255, 240, 0.9);
-        }
+    .input-frame{
+      margin: 10px 10px 6px 10px;
+      height: 4cm;
+      background: rgba(10, 25, 47, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+      padding: 8px 10px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow: var(--shadow2);
+    }
 
-        .message.system .content {
-            background: rgba(249, 226, 175, 0.9);
-        }
+    .input-row{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+    }
 
-        /* زر النسخ الجديد أسفل المحتوى */
-        .copy-under {
-            background: rgba(255, 255, 255, 0.5);
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            margin-top: 4px;
-            color: #333;
-            transition: 0.2s;
-            display: inline-block;
-        }
-        .copy-under:hover {
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        .copy-under.copied {
-            background: #4CAF50;
-            color: white;
-            box-shadow: none;
-        }
+    .input-row textarea{
+      flex:1;
+      padding: 8px 12px;
+      border-radius: 18px;
+      border: 2px solid rgba(42,167,255,0.55);
+      background: rgba(7, 20, 39, 0.9);
+      color: var(--text);
+      font-size: 0.9em;
+      resize:none;
+      font-family: inherit;
+      height: 1.8cm;
+      min-height: 1.8cm;
+      outline:none;
+    }
 
-        .message .time {
-            font-size: 0.55em;
-            color: #5a5a7a;
-            margin-top: 3px;
-            margin-left: 5px;
-        }
+    .circle-send{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(7, 20, 39, 0.95);
+      border: 2px solid var(--neon);
+      color: var(--neon2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 1.7rem;
+      cursor:pointer;
+      transition: 0.16s;
+      flex-shrink:0;
+      line-height: 1;
+      box-shadow: 0 8px 18px rgba(0, 140, 255, 0.18);
+    }
+    .circle-send:hover{ transform: scale(1.05); background: rgba(42,167,255,0.10); }
+    .circle-send:active{ transform: scale(0.98); }
 
-        .input-frame {
-            margin-left: 0.5cm;
-            margin-right: 0.5cm;
-            height: 4cm;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            padding: 6px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 5px;
-        }
+    .compact-row{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      flex-wrap:wrap;
+    }
 
-        .input-row {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    .upload-icon-small{
+      background:none;
+      border:none;
+      font-size: 1.1rem;
+      cursor:pointer;
+      color: var(--text);
+      transition: 0.16s;
+      padding: 0 3px;
+      opacity: 0.9;
+    }
+    .upload-icon-small:hover{ color: var(--neon2); opacity: 1; }
 
-        .input-row textarea {
-            flex: 1;
-            padding: 6px 10px;
-            border-radius: 20px;
-            border: 2px solid rgba(212, 175, 55, 0.6);
-            background: white;
-            color: #1e1e2e;
-            font-size: 0.85em;
-            resize: none;
-            font-family: inherit;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03), 0 2px 5px rgba(255,215,0,0.1);
-            height: 1.8cm;
-            min-height: 1.8cm;
-        }
+    .small-btn{
+      background: rgba(7, 20, 39, 0.85);
+      border: 2px solid rgba(42,167,255,0.55);
+      border-radius: 30px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor:pointer;
+      transition: 0.16s;
+      white-space: nowrap;
+    }
+    .small-btn:hover{ transform: translateY(-1px); background: rgba(42,167,255,0.12); }
+    .small-btn.active{
+      background: rgba(42,167,255,0.18);
+      border-color: rgba(110,231,255,0.65);
+      color: var(--neon2);
+    }
 
-        .circle-send {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid #D4AF37;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #D4AF37;
-            flex-shrink: 0;
-            line-height: 1;
-        }
+    .model-selector select{
+      padding: 4px 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(42,167,255,0.65);
+      background: rgba(7, 20, 39, 0.95);
+      color: var(--text);
+      font-size: 0.75rem;
+      cursor:pointer;
+      outline:none;
+    }
 
-        .circle-send:hover {
-            background: rgba(212, 175, 55, 0.1);
-            transform: scale(1.05);
-        }
+    .image-result{ margin-top: 8px; text-align:center; }
+    .image-result img{
+      max-width: 220px;
+      max-height: 220px;
+      border-radius: 16px;
+      border: 2px solid rgba(110,231,255,0.55);
+      box-shadow: 0 10px 25px rgba(0, 140, 255, 0.18);
+      cursor:pointer;
+      transition: 0.16s;
+    }
+    .image-result img:hover{ transform: scale(1.02); }
 
-        .compact-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+    .download-link{
+      display:inline-block;
+      margin-top: 7px;
+      padding: 6px 14px;
+      background: rgba(42,167,255,0.22);
+      border: 1px solid rgba(110,231,255,0.65);
+      color: var(--neon2);
+      border-radius: 18px;
+      text-decoration:none;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .download-link:hover{ background: rgba(42,167,255,0.30); }
 
-        .upload-icon-small {
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            color: #2d2d3a;
-            transition: 0.2s;
-            padding: 0 3px;
-        }
-        .upload-icon-small:hover {
-            color: #D4AF37;
-        }
+    footer{
+      text-align:center;
+      color: var(--muted);
+      font-size: 0.62rem;
+      border-top: 1px solid var(--border);
+      padding: 5px 0 6px 0;
+      flex-shrink:0;
+      opacity: 0.95;
+    }
 
-        .small-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #D4AF37;
-            border-radius: 30px;
-            padding: 3px 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1e1e2e;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 8px rgba(212, 175, 55, 0.1);
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
-        }
-
-        .small-btn:hover {
-            background: rgba(212, 175, 55, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .small-btn.active {
-            background: rgba(212, 175, 55, 0.25);
-            border-color: #b8860b;
-        }
-
-        .model-selector select {
-            padding: 3px 8px;
-            border-radius: 20px;
-            border: 1px solid #D4AF37;
-            background: white;
-            color: #1e1e2e;
-            font-size: 0.7rem;
-            cursor: pointer;
-        }
-
-        .hidden-check {
-            display: none;
-        }
-
-        .image-result {
-            margin-top: 8px;
-            text-align: center;
-        }
-
-        .image-result img {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 2px solid #D4AF37;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .image-result img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(212,175,55,0.3);
-        }
-        .download-link {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 4px 12px;
-            background: #D4AF37;
-            color: white;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        .download-link:hover {
-            background: #b8860b;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 2px;
-            color: #5a5a7a;
-            font-size: 0.6rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding-top: 2px;
-            flex-shrink: 0;
-        }
-    </style>
+    /* Tiny status chip */
+    .statusbar{
+      display:flex;
+      justify-content:center;
+      gap: 8px;
+      margin: 4px 8px 0 8px;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      color: rgba(155,183,230,0.95);
+      user-select:none;
+    }
+    .chip{
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(7,20,39,0.65);
+      border: 1px solid rgba(42,167,255,0.35);
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <div class="brand">
-                <div class="gold">AMMAR//i\\CADEMY</div>
-                <div class="sub">Ammar Nasir Hussein al-mantafji 2026</div>
-            </div>
-        </header>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="gold">AMMAR//i\\CADEMY</div>
+        <div class="sub">Ammar Nasir Hussein al-mantafji 2026</div>
+      </div>
+    </header>
 
-        <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <!-- الرسائل ستضاف هنا ديناميكياً -->
-            </div>
-
-            <div class="input-frame">
-                <input type="checkbox" id="voiceOutput" class="hidden-check">
-                <input type="checkbox" id="imageMode" class="hidden-check">
-                <input type="checkbox" id="internetSearch" class="hidden-check">
-
-                <div class="input-row">
-                    <textarea id="userInput" placeholder="Type your message here..." rows="1"></textarea>
-                    <button class="circle-send" id="sendBtn">↑</button>
-                </div>
-
-                <div class="compact-row">
-                    <button class="upload-icon-small" id="uploadBtn" title="Upload image">📎</button>
-                    <button class="small-btn" id="deepThinkBtn">DeepThink</button>
-                    <button class="small-btn" id="searchBtn">Search</button>
-                    <div class="model-selector">
-                        <select id="modelSelect">
-                            <option value="gpt-5-nano">GPT-5 Nano</option>
-                            <option value="claude-opus-4">Claude Opus 4</option>
-                            <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
-                            <option value="deepseek-r1" selected>DeepSeek R1</option>
-                        </select>
-                    </div>
-                </div>
-
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-            </div>
-
-            <div class="image-result" id="imageResult"></div>
-        </div>
-
-        <footer>
-            ⚡ No API keys • Puter.js + Pollinations.ai • to infinity ✨
-        </footer>
+    <div class="statusbar">
+      <div class="chip" id="statusChip">Ready</div>
+      <div class="chip" id="cacheChip">Cache: 0</div>
     </div>
 
-    <script>
-        // DOM elements
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const voiceOutput = document.getElementById('voiceOutput');
-        const imageMode = document.getElementById('imageMode');
-        const internetSearch = document.getElementById('internetSearch');
-        const modelSelect = document.getElementById('modelSelect');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const fileInput = document.getElementById('fileInput');
-        const imageResult = document.getElementById('imageResult');
-        const deepThinkBtn = document.getElementById('deepThinkBtn');
-        const searchBtn = document.getElementById('searchBtn');
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages"></div>
 
-        let deepThinkActive = false;
-        let searchActive = false;
+      <div class="input-frame">
+        <div class="input-row">
+          <textarea id="userInput" placeholder="Type your message here..." rows="1"></textarea>
+          <button class="circle-send" id="sendBtn" title="Send">↑</button>
+        </div>
 
-        // Cache for faster learning
-        const responseCache = new Map();
+        <div class="compact-row">
+          <button class="upload-icon-small" id="uploadBtn" title="Upload image">📎</button>
 
-        // Copy function
-        window.copyText = function(element, text) {
-            navigator.clipboard.writeText(text).then(() => {
-                element.classList.add('copied');
-                element.textContent = '✓ copied';
-                setTimeout(() => {
-                    element.classList.remove('copied');
-                    element.textContent = 'copy';
-                }, 2000);
-            }).catch(err => {
-                console.error('Copy failed:', err);
-                alert('Failed to copy text');
-            });
-        };
+          <button class="small-btn" id="deepThinkBtn">DeepThink</button>
+          <button class="small-btn" id="searchBtn">Search</button>
+          <button class="small-btn" id="clearBtn">Clear</button>
+          <button class="small-btn" id="exportBtn">Export</button>
+          <button class="small-btn" id="retryBtn">Retry</button>
 
-        deepThinkBtn.addEventListener('click', () => {
-            deepThinkActive = !deepThinkActive;
-            if (deepThinkActive) {
-                modelSelect.value = 'deepseek-r1';
-                deepThinkBtn.classList.add('active');
-            } else {
-                modelSelect.value = 'gpt-5-nano';
-                deepThinkBtn.classList.remove('active');
-            }
-        });
+          <div class="model-selector">
+            <select id="modelSelect">
+              <option value="gpt-5-nano" selected>GPT-5 Nano</option>
+              <option value="claude-opus-4">Claude Opus 4</option>
+              <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
+              <option value="deepseek-r1">DeepSeek R1</option>
+            </select>
+          </div>
+        </div>
 
-        searchBtn.addEventListener('click', () => {
-            searchActive = !searchActive;
-            internetSearch.checked = searchActive;
-            if (searchActive) {
-                searchBtn.classList.add('active');
-            } else {
-                searchBtn.classList.remove('active');
-            }
-        });
+        <input type="file" id="fileInput" accept="image/*" style="display:none;">
+      </div>
 
-        uploadBtn.addEventListener('click', () => fileInput.click());
+      <div class="image-result" id="imageResult"></div>
+    </div>
 
-        function addMessage(role, content, isHtml = false) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${role}`;
-            
-            const wrapper = document.createElement('div');
-            wrapper.className = 'content-wrapper';
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'content';
-            if (isHtml) {
-                contentDiv.innerHTML = content;
-            } else {
-                contentDiv.textContent = content;
-            }
-            
-            wrapper.appendChild(contentDiv);
-            
-            // إضافة زر copy تحت المحتوى
-            const copyUnder = document.createElement('span');
-            copyUnder.className = 'copy-under';
-            copyUnder.textContent = 'copy';
-            copyUnder.onclick = function() { copyText(this, contentDiv.textContent || contentDiv.innerText); };
-            wrapper.appendChild(copyUnder);
-            
-            msgDiv.appendChild(wrapper);
-            
-            const timeSpan = document.createElement('span');
-            timeSpan.className = 'time';
-            const now = new Date();
-            timeSpan.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            msgDiv.appendChild(timeSpan);
-            
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            if (role === 'assistant' && voiceOutput.checked) {
-                speakText(content);
-            }
+    <footer>⚡ No API keys • Puter.js + Pollinations.ai • UltraFast ✨</footer>
+  </div>
+
+  <script>
+    // =========================
+    // DOM
+    // =========================
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const modelSelect = document.getElementById('modelSelect');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const fileInput = document.getElementById('fileInput');
+    const imageResult = document.getElementById('imageResult');
+    const deepThinkBtn = document.getElementById('deepThinkBtn');
+    const searchBtn = document.getElementById('searchBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const retryBtn = document.getElementById('retryBtn');
+    const statusChip = document.getElementById('statusChip');
+    const cacheChip = document.getElementById('cacheChip');
+
+    let deepThinkActive = false;
+    let searchActive = false;
+
+    // =========================
+    // MEMORY (conversation)
+    // =========================
+    const messages = [
+      {
+        role: "system",
+        content: "You are Cosmic AI inside AMMAR//i\\\\CADEMY. Be clear, helpful, structured."
+      }
+    ];
+
+    // =========================
+    // UTIL UI
+    // =========================
+    function nowTime() {
+      const now = new Date();
+      return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    window.copyText = function(el, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        el.classList.add('copied');
+        el.textContent = '✓ copied';
+        setTimeout(() => {
+          el.classList.remove('copied');
+          el.textContent = 'copy';
+        }, 1200);
+      }).catch(() => alert('Failed to copy text'));
+    };
+
+    function addMessage(role, content) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${role}`;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'content-wrapper';
+
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'content';
+      contentDiv.textContent = content;
+
+      wrapper.appendChild(contentDiv);
+
+      const copyUnder = document.createElement('span');
+      copyUnder.className = 'copy-under';
+      copyUnder.textContent = 'copy';
+      copyUnder.onclick = () => copyText(copyUnder, contentDiv.textContent || '');
+      wrapper.appendChild(copyUnder);
+
+      msgDiv.appendChild(wrapper);
+
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'time';
+      timeSpan.textContent = nowTime();
+      msgDiv.appendChild(timeSpan);
+
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      return { msgDiv, contentDiv };
+    }
+
+    function setStatus(text) { statusChip.textContent = text; }
+
+    // =========================
+    // NORMALIZE ChatResponse
+    // =========================
+    function normalizeChatText(resp) {
+      if (typeof resp === 'string') return resp;
+      if (resp && resp.message && typeof resp.message.content === 'string') return resp.message.content;
+      return JSON.stringify(resp, null, 2);
+    }
+
+    // Heuristic: OpenAI-only tools
+    function isOpenAIModel(modelName) {
+      return modelName.startsWith('gpt-') || modelName.startsWith('openai/');
+    }
+
+    // =========================
+    // STORAGE (optional but fast)
+    // =========================
+    const STORAGE_KEY = "ammariacademy_ultrafast_v1";
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          messages,
+          model: modelSelect.value,
+          deepThinkActive,
+          searchActive
+        }));
+      } catch (e) {}
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const state = JSON.parse(raw);
+
+        if (state.model) modelSelect.value = state.model;
+        deepThinkActive = !!state.deepThinkActive;
+        searchActive = !!state.searchActive;
+
+        deepThinkBtn.classList.toggle('active', deepThinkActive);
+        searchBtn.classList.toggle('active', searchActive);
+
+        if (Array.isArray(state.messages) && state.messages.length) {
+          messages.length = 0;
+          state.messages.forEach(m => messages.push(m));
+          return true;
         }
+      } catch (e) {}
+      return false;
+    }
 
-        function speakText(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = 1;
-            utterance.pitch = 1;
-            speechSynthesis.speak(utterance);
+    function renderFromMessages() {
+      chatMessages.innerHTML = "";
+      for (const m of messages) {
+        if (m.role === "system") continue;
+        addMessage(m.role === "assistant" ? "assistant" : "user", m.content);
+      }
+    }
+
+    // =========================
+    // IMAGE GENERATION (fast)
+    // =========================
+    async function generateImage(prompt) {
+      const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}`;
+      imageResult.innerHTML = `
+        <img src="${imgUrl}" alt="${prompt}" onclick="window.open('${imgUrl}')">
+        <br>
+        <a href="${imgUrl}" download="${prompt.replace(/\s+/g, '_')}.png" class="download-link">📥 Download Image</a>
+      `;
+      return imgUrl;
+    }
+
+    // =========================
+    // ULTRAFAST ORCHESTRATOR
+    // =========================
+    let currentAbort = null;
+
+    class LRUCache {
+      constructor(limit = 140) { this.limit = limit; this.map = new Map(); }
+      get(k) {
+        if (!this.map.has(k)) return null;
+        const v = this.map.get(k);
+        this.map.delete(k);
+        this.map.set(k, v);
+        return v;
+      }
+      set(k, v) {
+        if (this.map.has(k)) this.map.delete(k);
+        this.map.set(k, v);
+        if (this.map.size > this.limit) {
+          const firstKey = this.map.keys().next().value;
+          this.map.delete(firstKey);
         }
+      }
+      size() { return this.map.size; }
+    }
+    const fastCache = new LRUCache(150);
 
-        async function generateImage(prompt) {
-            const imgUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}`;
-            imageResult.innerHTML = `
-                <img src="${imgUrl}" alt="${prompt}" onclick="window.open('${imgUrl}')">
-                <br>
-                <a href="${imgUrl}" download="${prompt.replace(/\s+/g, '_')}.png" class="download-link">📥 Download Image</a>
-            `;
-            return imgUrl;
+    function normText(s) {
+      return (s || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .replace(/[^\p{L}\p{N}\s\.\,\?\!\-\_\:\;\(\)\[\]\/]/gu, "");
+    }
+
+    function fastRoute(userText, selectedModel, deepThink, search) {
+      const wantsCode = /(\bcode\b|\bhtml\b|\bcss\b|\bjavascript\b|\bjs\b|\bbug\b|\berror\b|\bdebug\b|كود|برمجة|تصليح|خطأ|مشكلة|سكريبت)/i.test(userText);
+      const wantsImage = /(image|picture|صورة|ارسم|generate image)/i.test(userText);
+      return { wantsCode, wantsImage, model: selectedModel, useSearch: !!search, deepThink: !!deepThink };
+    }
+
+    function buildFastContext(messages, tailTurns = 14) {
+      const sys = messages.find(m => m.role === "system") || { role:"system", content:"You are a helpful assistant." };
+      const mem = messages.find(m => m.role === "system" && (m.content || "").startsWith("MEMORY SUMMARY:")) || null;
+      const nonSys = messages.filter(m => m.role !== "system");
+      const tail = nonSys.slice(-tailTurns);
+
+      const ctx = [sys];
+      if (mem) ctx.push(mem);
+      ctx.push(...tail);
+      return ctx;
+    }
+
+    async function maybeSummarize(messages, model) {
+      const nonSys = messages.filter(m => m.role !== "system");
+      if (nonSys.length < 44) return;
+
+      const toSumm = nonSys.slice(0, nonSys.length - 16);
+      const keep = nonSys.slice(-16);
+      const sys = messages.find(m => m.role === "system") || { role:"system", content:"You are a helpful assistant." };
+
+      const prompt = [
+        { role:"system", content:"Summarize compactly: goals, decisions, constraints, key facts. Very short." },
+        { role:"user", content: toSumm.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n") }
+      ];
+
+      try {
+        const resp = await puter.ai.chat(prompt, { model, max_tokens: 260 });
+        const summary = normalizeChatText(resp).trim();
+
+        messages.length = 0;
+        messages.push(sys);
+        messages.push({ role:"system", content:"MEMORY SUMMARY:\n" + summary });
+        keep.forEach(m => messages.push(m));
+      } catch {}
+    }
+
+    async function withRetry(fn, retries = 2) {
+      let lastErr;
+      for (let i = 0; i <= retries; i++) {
+        try { return await fn(); }
+        catch (e) {
+          lastErr = e;
+          const wait = i === 0 ? 150 : 350;
+          await new Promise(r => setTimeout(r, wait));
         }
+      }
+      throw lastErr;
+    }
 
-        async function handleImageRequest(text) {
-            const enhancedPrompt = await chatWithAI("Improve this prompt for an image generation: " + text);
-            return generateImage(enhancedPrompt);
+    async function streamChat({ context, model, options, onDelta, signal }) {
+      const stream = await puter.ai.chat(context, { model, stream: true, ...options, signal });
+      let full = "";
+
+      for await (const part of stream) {
+        if (signal?.aborted) throw new Error("aborted");
+        if (part && typeof part.text === "string") {
+          full += part.text;
+          onDelta(part.text, full);
         }
+      }
+      return full;
+    }
 
-        async function chatWithAI(message) {
-            try {
-                const cacheKey = modelSelect.value + ":" + message;
-                if (responseCache.has(cacheKey)) {
-                    return responseCache.get(cacheKey);
-                }
+    async function ultraFastAsk({ userText, selectedModel, deepThink, search, messages, onDelta }) {
+      if (currentAbort) currentAbort.abort();
+      currentAbort = new AbortController();
 
-                const options = {
-                    model: modelSelect.value,
-                    max_tokens: 1000
-                };
-                if (modelSelect.value !== 'deepseek-r1') {
-                    options.temperature = 0.7;
-                }
-                const response = await puter.ai.chat(message, options);
-                
-                responseCache.set(cacheKey, response);
-                if (responseCache.size > 100) {
-                    const firstKey = responseCache.keys().next().value;
-                    responseCache.delete(firstKey);
-                }
-                return response;
-            } catch (error) {
-                console.error('Puter.ai error:', error);
-                throw error;
-            }
-        }
+      const route = fastRoute(userText, selectedModel, deepThink, search);
 
-        fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+      const tail = buildFastContext(messages, 10);
+      const cacheKey = JSON.stringify({
+        m: route.model,
+        d: route.deepThink ? 1 : 0,
+        s: route.useSearch ? 1 : 0,
+        u: normText(userText),
+        t: tail.map(x => [x.role, normText(x.content).slice(0, 120)]),
+      });
 
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                const imageData = event.target.result;
-                addMessage('user', '📷 [Image uploaded]');
+      const cached = fastCache.get(cacheKey);
+      cacheChip.textContent = `Cache: ${fastCache.size()}`;
+      if (cached) {
+        setStatus("Cache hit");
+        return cached;
+      }
 
-                try {
-                    const response = await puter.ai.chat(
-                        "Analyze this image in detail, tell me what you see.",
-                        imageData,
-                        { model: modelSelect.value }
-                    );
-                    addMessage('assistant', response);
-                } catch (error) {
-                    addMessage('system', `❌ Error analyzing image: ${error.message}`);
-                }
-            };
-            reader.readAsDataURL(file);
-        });
+      await maybeSummarize(messages, route.model);
 
-        sendBtn.addEventListener('click', async () => {
-            const text = userInput.value.trim();
-            if (!text && !imageMode.checked) return;
+      const ctx = buildFastContext(messages, 14);
+      ctx.push({ role: "user", content: userText });
 
-            if (imageMode.checked || text.toLowerCase().includes("صورة") || text.toLowerCase().includes("image") || text.toLowerCase().includes("picture")) {
-                addMessage('user', `🖼️ ${text}`);
-                userInput.value = '';
-                try {
-                    await handleImageRequest(text);
-                } catch (error) {
-                    addMessage('system', `❌ Error generating image: ${error.message}`);
-                }
-            } else {
-                addMessage('user', text);
-                userInput.value = '';
-                
-                try {
-                    let finalText = text;
-                    if (internetSearch.checked) {
-                        finalText = text + " (please include up-to-date information from the internet if possible)";
-                    }
-                    const response = await chatWithAI(finalText);
-                    addMessage('assistant', response);
-                } catch (error) {
-                    addMessage('system', `❌ Connection error: ${error.message}`);
-                }
-            }
-        });
-
-        userInput.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'Enter') {
-                sendBtn.click();
-            }
-        });
-
-        // رسالة ترحيب
-        addMessage('system', 'Welcome to the infinite space! I work without any API keys. Try sending a message or request an image.');
-    </script>
-</body>
-    </html>
+      const options = {
+        max_tokens: deepThink ? 1100 : 800,
+        temperature: route.wantsCode ? 0.2 : 0.
